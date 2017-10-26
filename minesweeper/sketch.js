@@ -18,7 +18,20 @@ function setup() {
   grid = make2DArray(cols, rows);
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
-    grid[i][j]= new Cell(i * w, j * w, w);
+    grid[i][j]= new Cell(i, j, w);
+    }
+  }
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+    grid[i][j].countMines();
+    }
+  }
+}
+
+function gameOver() {
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      grid[i][j].revealed = true;
     }
   }
 }
@@ -28,6 +41,8 @@ function mousePressed() {
     for (let j = 0; j < rows; j++) {
       if (grid[i][j].contains(mouseX, mouseY)) {
         grid[i][j].reveal();
+        if (grid[i][j].mine)
+          gameOver();
       }
     }
   }
